@@ -11,14 +11,18 @@ namespace MohawkGame2D
     public class Game
     {
         // Place your variables here:
-
+        Player player = new Player();
 
         /// <summary>
         ///     Setup runs once before the game loop begins.
         /// </summary>
         public void Setup()
         {
+            Window.SetTitle("Dolph");
+            Window.SetSize(1000, 600);
+            Window.TargetFPS = 60;
 
+            player.position = player.startPosition;
         }
 
         /// <summary>
@@ -26,7 +30,8 @@ namespace MohawkGame2D
         /// </summary>
         public void Update()
         {
-
+            Window.ClearBackground(Color.White);
+            player.Update();
         }
     }
 

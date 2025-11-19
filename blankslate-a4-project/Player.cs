@@ -10,14 +10,15 @@ namespace MohawkGame2D
     public class Player
     {
         public bool submerged = true;
-        public Vector2 startPosition = new Vector2(100,250);
+        public Vector2 startPosition = new Vector2(100, 400);
+
         public Vector2 position;
         public Vector2 velocity = new Vector2(0, 0);
         public Vector2 acceleration = new Vector2(0, 0);
-        public Vector2 gravity = new Vector2(0, 750);
+        Vector2 gravity = new Vector2(0, 750);
 
         float waterPressure = 0.2f; // ideally the closer you are to the bottom of the water, the more resistance the dolphin has in trying to go down
-        float maxSpeed = 400; // the player's speed limit
+        float maxSpeed = 80; // the player's speed limit
         public void Setup()
         {
 
@@ -25,23 +26,17 @@ namespace MohawkGame2D
         public void Update()
         {
             //Collisions();
-            if (submerged == true)
-            {
-                SwimPhysics();
-            }
-            else
-            {
-                AirPhysics();
-            }
-            DrawPlayer();
+            SwimPhysics();
             ProcessPlayerMovement();
+
+            DrawPlayer();
         }
         void DrawPlayer()
         {
             Draw.LineSize = 2;
             Draw.LineColor = new ColorF(0.0f, 1.0f);
-            Draw.FillColor = new Color(255, 255, 255);
-            Draw.Circle(0, 0, 35); //drawing player rectangle
+            Draw.FillColor = new Color(0,0,0);
+            Draw.Circle(position, 10); //drawing player rectangle
         }
         void ProcessPlayerMovement()
         {
@@ -56,7 +51,7 @@ namespace MohawkGame2D
                 {
                     for (int i = 0; i < 16; i++)
                     {
-                        acceleration.X = i * 10;
+                        acceleration.Y = i * 10;
                     }
                 }
 
@@ -70,19 +65,19 @@ namespace MohawkGame2D
 
                 if (!isPlayerMoving)
                 {
-                    velocity.Y *= 0.85f;
+                    velocity.Y *= 0.925f;
                 }
 
                 if (isPlayerMovingDown == true)
                 {
                     isPlayerMoving = true;
-                    velocity.Y += acceleration.Y + 75.0f * maxSpeed;
+                    velocity.Y += acceleration.Y + 0.65f * maxSpeed;
                 }
 
                 if (isPlayerMovingUp == true)
                 {
                     isPlayerMoving = true;
-                    velocity.Y -= acceleration.Y + 75.0f * maxSpeed;
+                    velocity.Y -= acceleration.Y + 0.65f * maxSpeed;
                 }
 
                 // player speed limit
@@ -97,11 +92,19 @@ namespace MohawkGame2D
             }
         void SwimPhysics()
         {
-            position += -(position * waterPressure) * Time.DeltaTime; // water pressure
+            maxSpeed = 90;
+            float pressure = 0;
+            pressure = 35 - position.Y * 0.15f;
+            if (pressure > 0) pressure = 0;
+            velocity.Y += pressure;
+
             position += velocity * Time.DeltaTime;
+            velocity -= gravity * waterPressure * Time.DeltaTime;
         }
         void AirPhysics()
         {
+            maxSpeed = 75;
+            position += velocity * Time.DeltaTime;
             velocity += gravity * Time.DeltaTime; // velocity changes because of gravity, position changes because of velocity
         }
     }
