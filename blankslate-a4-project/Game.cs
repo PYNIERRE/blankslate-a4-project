@@ -18,7 +18,9 @@ namespace MohawkGame2D
         /// </summary>
         public void Setup()
         {
-
+            Window.SetTitle("Dorlphin");
+            Window.SetSize(1000, 600);
+            Window.TargetFPS = 60;
         }
 
         /// <summary>
@@ -26,6 +28,7 @@ namespace MohawkGame2D
         /// </summary>
         public void Update()
         {
+            Window.ClearBackground(Color.White);
 
         }
     }
