@@ -19,7 +19,7 @@ namespace MohawkGame2D
         public void Setup()
         {
             Window.SetTitle("Dolph");
-            Window.SetSize(1000, 600);
+            Window.SetSize(1200, 600);
             Window.TargetFPS = 60;
 
             player.position = player.startPosition;

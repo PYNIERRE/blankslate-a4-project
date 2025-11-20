@@ -94,12 +94,11 @@ namespace MohawkGame2D
         {
             maxSpeed = 90;
             float pressure = 0;
-            pressure = 35 - position.Y * 0.15f;
+            pressure = 45 - position.Y * 0.15f; // first value is the position of the thing
             if (pressure > 0) pressure = 0;
-            velocity.Y += pressure;
+            velocity.Y += pressure * 1.2f;
 
             position += velocity * Time.DeltaTime;
-            velocity -= gravity * waterPressure * Time.DeltaTime;
         }
         void AirPhysics()
         {
