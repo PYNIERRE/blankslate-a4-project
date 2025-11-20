@@ -13,16 +13,23 @@ namespace MohawkGame2D
         // Place your variables here:
         Player player = new Player();
 
+        public float waterLevel; // the position of the floor relative to the bottom of the screen
+        public int waterLevelTarget; // target that the water level tweens to
+
+        public int floorLevel; // the position of the floor relative to the bottom of the screen
+
         /// <summary>
         ///     Setup runs once before the game loop begins.
         /// </summary>
         public void Setup()
         {
             Window.SetTitle("Dolph");
-            Window.SetSize(1200, 600);
-            Window.TargetFPS = 60;
+            Window.SetSize(1200, 700);
+            Window.TargetFPS = 120;
 
             player.position = player.startPosition;
+            waterLevel = 400;
+            floorLevel = 75;
         }
 
         /// <summary>
@@ -31,8 +38,22 @@ namespace MohawkGame2D
         public void Update()
         {
             Window.ClearBackground(Color.White);
+
+            DebugVisuals(player); // putting values into visuals
+
             player.Update();
         }
-    }
 
+        void DebugVisuals(Player player)
+        {
+            Text.Size = 14;
+
+            Text.Draw($"pressure: {player.pressure}", 20, 100);
+            Text.Draw($"acceleration: {player.acceleration}", 20, 80);
+            Text.Draw($"maxspeed: {player.maxSpeed}", 20, 60);
+            Text.Draw($"position: {player.position}", 20, 40);
+            Text.Draw($"velocity: {player.velocity}", 20, 20);
+        }
+    }
+     
 }
