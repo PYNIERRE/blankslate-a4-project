@@ -18,7 +18,10 @@ namespace MohawkGame2D
         /// </summary>
         public void Setup()
         {
-
+            Window.SetTitle("Dolphin Game");
+            Window.SetSize(800, 600);
+           // Text.Font = ("Arial");
+            Text.Size = 20;
         }
 
         /// <summary>
