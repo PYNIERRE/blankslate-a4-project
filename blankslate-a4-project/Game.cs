@@ -12,6 +12,7 @@ namespace MohawkGame2D
     {
         // Place your variables here:
         Player player = new Player();
+        Water water = new Water();
 
         public float waterLevel; // the position of the floor relative to the bottom of the screen
         public int waterLevelTarget; // target that the water level tweens to
@@ -41,6 +42,7 @@ namespace MohawkGame2D
 
             DebugVisuals(player); // putting values into visuals
 
+            water.Update();
             player.Update();
         }
 
@@ -55,5 +57,5 @@ namespace MohawkGame2D
             Text.Draw($"velocity: {player.velocity}", 20, 20);
         }
     }
-     
+
 }

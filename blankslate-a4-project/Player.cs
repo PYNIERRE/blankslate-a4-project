@@ -11,7 +11,7 @@ namespace MohawkGame2D
     {
         public bool submerged = true;
         bool isPlayerMoving;
-        
+
         public Vector2 startPosition = new Vector2(150, 400);
 
         public Vector2 position = new Vector2(0, 0);
@@ -19,8 +19,7 @@ namespace MohawkGame2D
         public Vector2 acceleration = new Vector2(0, 0);
         Vector2 gravity = new Vector2(0, 950);
 
-        public float pressure;
-        float waterPressure = 0.2f; // ideally the closer you are to the bottom of the water, the more resistance the dolphin has in trying to go down
+        public float pressure; // the closer you are to the bottom of the water, the more resistance the dolphin has in trying to go down
         public Vector2 maxSpeed = new Vector2(0, 200); // the player's speed limit
 
         public void Setup()
@@ -43,7 +42,7 @@ namespace MohawkGame2D
             // draws circle at player
             Draw.LineSize = 2;
             Draw.LineColor = new ColorF(0.0f, 1.0f);
-            Draw.FillColor = new Color(0,0,0);
+            Draw.FillColor = new Color(0, 0, 0);
             Draw.Circle((int)position.X, (int)position.Y, 10); //convert floats to int to fix subpixel movement
         }
         void ProcessPlayerMovement()
@@ -55,62 +54,62 @@ namespace MohawkGame2D
             bool isPlayerOutOfWater = (Input.IsKeyboardKeyDown(KeyboardInput.Q)); //debug!!!
             isPlayerMoving = false;
 
-                // horizontal accelleration for moving. balances out because of the speed limit
-                if (isPlayerMoving == true)
-                {
-                acceleration.Y++;
-                }
-                if (!isPlayerMoving == false)
-                {
-                acceleration.Y--;
-                }
+            // horizontal accelleration for moving. balances out because of the speed limit
+            if (isPlayerMoving == true)
+            {
+                acceleration.Y+= 1;
+            }
+            else if (!isPlayerMoving == false)
+            {
+                acceleration.Y-= 1;
+            }
             if (acceleration.Y < 0) acceleration.Y = 0;
 
             // directional movement
             if (isPlayerMovingUp && isPlayerMovingDown && submerged == true) // bugfix for moving in 2 directions at a time
-                {
-                    isPlayerMoving = false;
-                    isPlayerMovingUp = false;
-                    isPlayerMovingDown = false;
-                }
+            {
+                isPlayerMoving = false;
+                isPlayerMovingUp = false;
+                isPlayerMovingDown = false;
+            }
 
-                if (!isPlayerMoving && submerged == true)
-                {
-                    velocity.Y *= 0.95f;
-                }
+            if (!isPlayerMoving && submerged == true)
+            {
+                velocity.Y *= 0.95f;
+            }
 
-                if (isPlayerMovingDown == true && submerged == true) // moving down
-                {
-                    isPlayerMoving = true;
-                    velocity.Y += acceleration.Y + 0.05f * maxSpeed.Y;
-                }
+            if (isPlayerMovingDown == true && submerged == true) // moving down
+            {
+                isPlayerMoving = true;
+                velocity.Y += acceleration.Y + 0.05f * maxSpeed.Y;
+            }
 
-                if (isPlayerMovingUp == true && submerged == true) // moving up
-                {
-                    isPlayerMoving = true;
-                    velocity.Y -= acceleration.Y + 0.05f * maxSpeed.Y;
-                }
+            if (isPlayerMovingUp == true && submerged == true) // moving up
+            {
+                isPlayerMoving = true;
+                velocity.Y -= acceleration.Y + 0.05f * maxSpeed.Y;
+            }
 
-                if (isPlayerOutOfWater == true) // checks for if player is out of water
-                {
-                    submerged = false; // BAM. sets submerged boolvalue to false
-                }
-                if (isPlayerOutOfWater == false)
-                {
-                    submerged = true;
-                }
+            if (isPlayerOutOfWater == true) // checks for if player is out of water
+            {
+                submerged = false; // BAM. sets submerged boolvalue to false
+            }
+            if (isPlayerOutOfWater == false)
+            {
+                submerged = true;
+            }
 
             // player speed limit
-            if (velocity.Y > maxSpeed.Y) 
-                {
-                    velocity.Y = ((velocity.Y + maxSpeed.Y) / 2);
-                }
-            if (velocity.Y < -maxSpeed.Y)
-                {
-                    velocity.Y = ((velocity.Y + -maxSpeed.Y) / 2);
-                }
-            // basically increments the player velocity every frame slowly back to the speed limit
+            if (velocity.Y > maxSpeed.Y)
+            {
+                velocity.Y = ((velocity.Y + maxSpeed.Y) / 2);
             }
+            if (velocity.Y < -maxSpeed.Y)
+            {
+                velocity.Y = ((velocity.Y + -maxSpeed.Y) / 2);
+            }
+            // basically increments the player velocity every frame slowly back to the speed limit
+        }
         void SwimPhysics()
         {
             maxSpeed.Y = 550; // water maxspeed
@@ -128,7 +127,7 @@ namespace MohawkGame2D
         }
         void AirPhysics()
         {
-            maxSpeed.Y = 650; // air maxspeed
+            maxSpeed.Y = 700; // air maxspeed
 
             position += 1.5f * velocity * Time.DeltaTime; // additional value represents velocity increase
             velocity += gravity * Time.DeltaTime; // velocity changes because of gravity, position changes because of velocity
