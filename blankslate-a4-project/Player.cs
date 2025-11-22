@@ -18,7 +18,7 @@ namespace MohawkGame2D
         public Vector2 velocity = new Vector2(0, 0);
         public Vector2 acceleration = new Vector2(0, 0);
         public int hitboxSize = 10;
-        Vector2 gravity = new Vector2(0, 950);
+        Vector2 gravity = new Vector2(0, 1000);
 
         public float pressure; // the closer you are to the bottom of the water, the more resistance the dolphin has in trying to go down
         public Vector2 maxSpeed = new Vector2(0, 200); // the player's speed limit

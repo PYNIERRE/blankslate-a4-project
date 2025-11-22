@@ -47,10 +47,12 @@ namespace MohawkGame2D
         void WaterCollision(Player player, Water water) // screw it. putting this here because it causes a stack overflow in other classes
         {
             Vector2 surface = new Vector2(player.position.X, Window.Height - water.waterLevel);
+            player.submerged = false;
 
             // debug circle. also doubles as a place one can put a water splash texture appearing
             Draw.FillColor = new Color(0, 0, 0);
             Draw.Circle(surface, 2); // debug
+            if (player.velocity.Y > 600 && player.submerged == true) player.velocity.Y *= 1.2f;
 
             if (player.position.Y < Window.Height - water.waterLevel)
             {
