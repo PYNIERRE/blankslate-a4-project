@@ -50,7 +50,9 @@ namespace MohawkGame2D
             bool isPlayerMovingLeft = (Input.IsKeyboardKeyDown(KeyboardInput.A)) || (Input.IsKeyboardKeyDown(KeyboardInput.Left));
             bool isPlayerMovingDown = (Input.IsKeyboardKeyDown(KeyboardInput.S)) || (Input.IsKeyboardKeyDown(KeyboardInput.Down));
             bool isPlayerMovingRight = (Input.IsKeyboardKeyDown(KeyboardInput.D)) || (Input.IsKeyboardKeyDown(KeyboardInput.Right));
-            bool isPlayerOutOfWater = (Input.IsKeyboardKeyDown(KeyboardInput.Q)); //debug!!!
+
+            bool isPlayerOutOfWater = (Input.IsKeyboardKeyDown(KeyboardInput.Q)); //debug!!! no longer does anything
+
             isPlayerMoving = false;
 
             // horizontal accelleration for moving. balances out because of the speed limit
