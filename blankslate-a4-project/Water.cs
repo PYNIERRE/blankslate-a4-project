@@ -27,10 +27,6 @@ namespace MohawkGame2D
         {
             waterLevel = ((25 * waterLevel) + waterLevelTarget) / 26; // slowly ease waterLevel to waterLevelTarget
         }
-        void FloatingPointFix()
-        {
-            if (waterLevel < waterLevelTarget + 1 && waterLevel > waterLevelTarget - 1) waterLevel = waterLevelTarget; // ik its such a small line of code but i wanted to keep it like this for organization sake just like the player cs
-        }
         void DrawWater()
         {
             Draw.LineSize = 1;
@@ -45,6 +41,10 @@ namespace MohawkGame2D
             Text.Draw($"waterLevelTarget: {waterLevelTarget}", 20, 160); // hastily put debug visuals into here
             bool waterDebug = (Input.IsKeyboardKeyPressed(KeyboardInput.E));
             if (waterDebug) waterLevelTarget = Random.Integer(250, 600);
+        }
+        void FloatingPointFix()
+        {
+            if (waterLevel < waterLevelTarget + 0.5 && waterLevel > waterLevelTarget - 0.5) waterLevel = waterLevelTarget; // ik its such a small line of code but i wanted to keep it like this for organization sake just like the player cs
         }
     }
 }

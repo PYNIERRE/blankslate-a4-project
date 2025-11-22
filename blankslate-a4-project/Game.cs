@@ -11,8 +11,8 @@ namespace MohawkGame2D
     public class Game
     {
         // Place your variables here:
-        Player player = new Player();
-        Water water = new Water();
+        public Player player = new Player();
+        public Water water = new Water();
 
         public int floorLevel; // the position of the floor relative to the bottom of the screen
 
@@ -38,12 +38,35 @@ namespace MohawkGame2D
         {
             Window.ClearBackground(Color.White);
 
-            DebugVisuals(player); // putting values into visuals
-
             water.Update();
+            WaterCollision(player, water);
+
+            DebugVisuals(player); // putting values into visuals
             player.Update();
         }
+        void WaterCollision(Player player, Water water) // screw it. putting this here because it causes a stack overflow in other classes
+        {
+            Vector2 surface = new Vector2(player.position.X, Window.Height - water.waterLevel);
 
+            // debug circle. also doubles as a place one can put a water splash texture appearing
+            Draw.FillColor = new Color(0, 0, 0);
+            Draw.Circle(surface, 2); // debug
+
+            if (player.position.Y < Window.Height - water.waterLevel)
+            {
+                player.submerged = false;
+            }
+            if (player.position.Y >= Window.Height - water.waterLevel)
+            {
+                player.submerged = true;
+            }
+            if (player.position.Y > Window.Height - water.waterLevel && player.position.Y < Window.Height - water.waterLevel + 180) // parameters, working on gravity snaps to the top
+            {
+                int surfaceDistance = (int)Vector2.Distance(player.position, surface);
+                Text.Draw($"surface distance: {surfaceDistance}", 20, 180);
+                player.velocity.Y -= (180 - surfaceDistance) / 18; // calculates how close the player is to the surface and speeds them up the closer they get
+            }
+        }
         void DebugVisuals(Player player)
         {
             Text.Size = 14;
