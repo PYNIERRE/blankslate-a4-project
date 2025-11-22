@@ -21,7 +21,7 @@ namespace MohawkGame2D
             FloatingPointFix();
 
             DrawWater();
-            // WaterTest(); // debug for water
+            WaterTest(); // debug for water
         }
         void WaterLevelMovement()
         {
