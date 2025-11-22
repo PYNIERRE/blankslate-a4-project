@@ -35,13 +35,13 @@ namespace MohawkGame2D
             Draw.Rectangle(0, Window.Height - (int)waterLevel, Window.Width, Window.Height * 2);
         }
 
-        void WaterTest() // module to change the "water level target" to a random number
+        /* void WaterTest() // module to change the "water level target" to a random number
         {
             Text.Draw($"waterLevel: {waterLevel}", 20, 140);
             Text.Draw($"waterLevelTarget: {waterLevelTarget}", 20, 160); // hastily put debug visuals into here
             bool waterDebug = (Input.IsKeyboardKeyPressed(KeyboardInput.E));
             if (waterDebug) waterLevelTarget = Random.Integer(250, 600);
-        }
+        } */
         void FloatingPointFix()
         {
             if (waterLevel < waterLevelTarget + 0.5 && waterLevel > waterLevelTarget - 0.5) waterLevel = waterLevelTarget; // ik its such a small line of code but i wanted to keep it like this for organization sake just like the player cs
