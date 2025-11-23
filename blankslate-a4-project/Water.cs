@@ -11,27 +11,37 @@ namespace MohawkGame2D
     {
         public float waterLevel; // the position of the floor relative to the bottom of the screen
         public int waterLevelTarget; // target that the water level tweens to
+        public float floorLevel; // the position of the floor relative to the bottom of the screen
+        public int floorLevelTarget; // the position of the floor relative to the bottom of the screen
         public void Setup()
         {
-
+            
         }
         public void Update()
         {
-            WaterLevelMovement();
+            LevelMovement();
             FloatingPointFix();
 
             DrawWater();
             WaterTest(); // debug for water
         }
-        void WaterLevelMovement()
+        void LevelMovement()
         {
             waterLevel = ((25 * waterLevel) + waterLevelTarget) / 26; // slowly ease waterLevel to waterLevelTarget
+            floorLevel = ((25 * floorLevel) + floorLevelTarget) / 26; // slowly ease waterLevel to waterLevelTarget
         }
         void DrawWater()
         {
+            // floor
             Draw.LineSize = 1;
             Draw.LineColor = Color.Black;
-            Draw.FillColor = Color.Gray;
+            Draw.FillColor = new ColorF(0.0f, 0.2f);
+            Draw.Rectangle(0, Window.Height - (int)floorLevel, Window.Width, Window.Height * 2);
+
+            // water
+            Draw.LineSize = 1;
+            Draw.LineColor = Color.Black;
+            Draw.FillColor = new ColorF(0.0f, 0.2f);
             Draw.Rectangle(0, Window.Height - (int)waterLevel, Window.Width, Window.Height * 2);
         }
 
@@ -42,7 +52,11 @@ namespace MohawkGame2D
             Text.Draw($"waterLevel: {waterLevel}", 20, 140);
             Text.Draw($"waterLevelTarget: {waterLevelTarget}", 20, 160); // hastily put debug visuals into here
             bool waterDebug = (Input.IsKeyboardKeyPressed(KeyboardInput.E));
-            if (waterDebug) waterLevelTarget = Random.Integer(250, 600);
+            if (waterDebug)
+            {
+                waterLevelTarget = Random.Integer(250, 600);
+                floorLevelTarget = Random.Integer(50, 125);
+            }
         }
         void FloatingPointFix()
         {

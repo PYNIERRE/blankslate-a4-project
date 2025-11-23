@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -14,7 +15,20 @@ namespace MohawkGame2D
 
         public Vector2 startPosition = new Vector2(150, 400);
 
+        public int state; // 1 swimming, 2 jumping
+        int[] frame = new int[3];
+
+        public Texture2D texture;
+        public Vector2 textureSize;
+
+        public Texture2D swimframe0;
+        public Texture2D swimframe1;
+        public Texture2D swimframe2;
+        public Texture2D swimframe3;
+        // i know, this method kinda sucks and is tedious. but im not fully sure how to make a proper array of frames yet so itll have to do
+
         public Vector2 position = new Vector2(0, 0);
+        public Vector2 hitboxPosition;
         public Vector2 velocity = new Vector2(0, 0);
         public Vector2 acceleration = new Vector2(0, 0);
         public int hitboxSize = 10;
@@ -25,24 +39,73 @@ namespace MohawkGame2D
 
         public void Setup()
         {
+            texture = Graphics.LoadTexture("Textures/dolphinswimss.png"); // spritesheet just incase
 
+            swimframe0 = Graphics.LoadTexture("Textures/dolphinswim0.png");
+            swimframe1 = Graphics.LoadTexture("Textures/dolphinswim1.png");
+            swimframe2 = Graphics.LoadTexture("Textures/dolphinswim2.png");
+            swimframe3 = Graphics.LoadTexture("Textures/dolphinswim3.png");
+            textureSize = new Vector2(100, 100); // width is divided by 4 for flipbook subsetting
         }
-        public void Update()
+        public void Update(Water water)
         {
             //Collisions();
-            if (submerged) SwimPhysics();
+            if (submerged) SwimPhysics(water);
             else AirPhysics();
+            HardPhysics(water);
             FloatingPointFix();
 
             ProcessPlayerMovement();
 
             DrawPlayer();
+            ProcessSpritesheet();
+        }
+        void ProcessSpritesheet()
+        {
+            if (submerged == true) state = 1;
+            else state = 2;
+
+            if (state == 1)
+            {
+                
+            }    
+
         }
         void DrawPlayer()
         {
-            // draws circle at player
+            // aligning the player's hitbox with the dolphin itself
+            hitboxPosition.X = (int)position.X - (velocity.X / 12) + 5;
+            hitboxPosition.Y = (int)position.Y - (velocity.Y / 12);
+
+            Vector2 dolphinSpriteOffset = new Vector2(50, 50);
+            float dolphinRotato1 = 0; // initial rotational value
+            float dolphinRotato2 = 0;
+            dolphinRotato1 = (((4 * dolphinRotato1) + velocity.Y) / 5); // initial rotational value
+            dolphinRotato2 = (((3 * dolphinRotato2) + dolphinRotato1) / 4); // double rotational value so you get that sweet clean easing
+
+            float radius = 50;
+            float angle = (dolphinRotato2 / 360 * MathF.PI);
+
+            dolphinSpriteOffset.X = (radius * MathF.Cos(angle)); 
+            dolphinSpriteOffset.Y = (radius * MathF.Sin(angle));
+
+
+
+            // draws path circle (original player)
             Draw.FillColor = new Color(0, 0, 0);
-            Draw.Circle((int)position.X, (int)position.Y, hitboxSize); //convert floats to int to fix subpixel movement
+            Draw.Circle((int)position.X + 70, (int)position.Y, 5); //convert floats to int to fix subpixel movement
+
+            //drawing hitbox (the actual player)
+            Draw.FillColor = new Color(0, 0, 0);
+            Draw.Circle(hitboxPosition, hitboxSize); //convert floats to int to fix subpixel movement
+
+            Graphics.Scale = 1f;
+            Graphics.Rotation = 0.0f + (int)dolphinRotato2;
+            Graphics.Draw(swimframe0, (int)position.X - (swimframe0.Width / 2) + dolphinSpriteOffset.Y - (velocity.X / 8) + (velocity.Y / 32), (int)position.Y + (swimframe0.Height / 2) + dolphinSpriteOffset.X - (velocity.Y / 8) - 150); // a bunch of clustered math because i wanted to make sure it looked nice lol
+
+            //Graphics.Scale = 1.5f;
+            //Graphics.Rotation = 0.0f;
+            //Graphics.DrawSubset(texture, position, position, textureSize); // neat subset stuff
         }
         void ProcessPlayerMovement()
         {
@@ -118,16 +181,24 @@ namespace MohawkGame2D
             }
             // basically increments the player velocity every frame slowly back to the speed limit
         }
-        void SwimPhysics()
+        void HardPhysics(Water water)
+        {
+            if (position.Y > Window.Height - water.floorLevel - 5)
+            {
+                position.Y = Window.Height - water.floorLevel - 5;
+                velocity.Y = 0;
+            }
+        }
+        void SwimPhysics(Water water)
         {
             maxSpeed.Y = 550; // water maxspeed
 
             // value of the pressure
             pressure = 0;
-            pressure = (95 - position.Y * 0.15f) * 3; // first value is the position of the pressure
+            pressure = ((120 - water.floorLevel / 2) - position.Y * 0.15f) * 2.5f; // first value is the position of the pressure
             if (pressure > 0) pressure = 0;
 
-            if (velocity.Y > 150) velocity.Y += pressure * 0.8f; // if player is going down fast, decrease pressure a tad
+            if (velocity.Y > 500) velocity.Y += pressure * 0.8f; // if player is going down fast, decrease pressure a tad
             else velocity.Y += pressure * 1.2f;
 
             position += 0.95f * velocity * Time.DeltaTime;

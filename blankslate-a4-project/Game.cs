@@ -13,8 +13,7 @@ namespace MohawkGame2D
         // Place your variables here:
         public Player player = new Player();
         public Water water = new Water();
-
-        public int floorLevel; // the position of the floor relative to the bottom of the screen
+        // self note. for future zach dont put a new game class here
 
         /// <summary>
         ///     Setup runs once before the game loop begins.
@@ -25,10 +24,12 @@ namespace MohawkGame2D
             Window.SetSize(1200, 700);
             Window.TargetFPS = 120;
 
+            player.Setup();
             player.position = player.startPosition;
             water.waterLevelTarget = 400;
             water.waterLevel = 50;
-            floorLevel = 75;
+            water.floorLevel = -50;
+            water.floorLevelTarget = 75;
         }
 
         /// <summary>
@@ -42,7 +43,7 @@ namespace MohawkGame2D
             WaterCollision(player, water);
 
             DebugVisuals(player); // putting values into visuals
-            player.Update();
+            player.Update(water);
         }
         void WaterCollision(Player player, Water water) // screw it. putting this here because it causes a stack overflow in other classes
         {
@@ -67,12 +68,13 @@ namespace MohawkGame2D
                 int surfaceDistance = (int)Vector2.Distance(player.position, surface);
                 Text.Draw($"surface distance: {surfaceDistance}", 20, 180);
                 player.velocity.Y -= (180 - surfaceDistance) / 18; // calculates how close the player is to the surface and speeds them up the closer they get
+
+                if (player.velocity.Y > -70 && player.velocity.Y < 70 && player.submerged == true && surfaceDistance < 8) player.velocity.Y *= Random.Float(1f,1.5f); // makes player even out at water level
             }
         }
         void DebugVisuals(Player player)
         {
             Text.Size = 14;
-
             Text.Draw($"pressure: {player.pressure}", 20, 100);
             Text.Draw($"acceleration: {player.acceleration}", 20, 80);
             Text.Draw($"maxspeed: {player.maxSpeed}", 20, 60);
