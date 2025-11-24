@@ -48,14 +48,10 @@ namespace MohawkGame2D
         void WaterTest() // module to change the "water level target" to a random number
         {
             Text.Size = 14;
-
-            Text.Draw($"waterLevel: {waterLevel}", 20, 140);
-            Text.Draw($"waterLevelTarget: {waterLevelTarget}", 20, 160); // hastily put debug visuals into here
             bool waterDebug = (Input.IsKeyboardKeyPressed(KeyboardInput.E));
             if (waterDebug)
             {
                 waterLevelTarget = Random.Integer(250, 600);
-                floorLevelTarget = Random.Integer(50, 125);
             }
         }
         void FloatingPointFix()

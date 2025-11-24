@@ -26,10 +26,10 @@ namespace MohawkGame2D
 
             player.Setup();
             player.position = player.startPosition;
-            water.waterLevelTarget = 400;
-            water.waterLevel = 50;
+            water.waterLevelTarget = 420;
+            water.waterLevel = 150;
             water.floorLevel = -50;
-            water.floorLevelTarget = 75;
+            water.floorLevelTarget = 20;
         }
 
         /// <summary>
@@ -37,40 +37,12 @@ namespace MohawkGame2D
         /// </summary>
         public void Update()
         {
-            Window.ClearBackground(Color.White);
+            Window.ClearBackground(new ColorF(1.0f, 1.0f));
 
             water.Update();
-            WaterCollision(player, water);
 
-            DebugVisuals(player); // putting values into visuals
+            //DebugVisuals(player); // putting values into visuals
             player.Update(water);
-        }
-        void WaterCollision(Player player, Water water) // screw it. putting this here because it causes a stack overflow in other classes
-        {
-            Vector2 surface = new Vector2(player.position.X, Window.Height - water.waterLevel);
-            player.submerged = false;
-
-            // debug circle. also doubles as a place one can put a water splash texture appearing
-            Draw.FillColor = new Color(0, 0, 0);
-            Draw.Circle(surface, 2); // debug
-            if (player.velocity.Y > 600 && player.submerged == true) player.velocity.Y *= 1.2f;
-
-            if (player.position.Y < Window.Height - water.waterLevel)
-            {
-                player.submerged = false;
-            }
-            if (player.position.Y >= Window.Height - water.waterLevel)
-            {
-                player.submerged = true;
-            }
-            if (player.position.Y > Window.Height - water.waterLevel && player.position.Y < Window.Height - water.waterLevel + 180) // parameters, working on gravity snaps to the top
-            {
-                int surfaceDistance = (int)Vector2.Distance(player.position, surface);
-                Text.Draw($"surface distance: {surfaceDistance}", 20, 180);
-                player.velocity.Y -= (180 - surfaceDistance) / 18; // calculates how close the player is to the surface and speeds them up the closer they get
-
-                if (player.velocity.Y > -70 && player.velocity.Y < 70 && player.submerged == true && surfaceDistance < 8) player.velocity.Y *= Random.Float(1f,1.5f); // makes player even out at water level
-            }
         }
         void DebugVisuals(Player player)
         {
