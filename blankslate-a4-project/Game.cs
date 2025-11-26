@@ -13,6 +13,7 @@ namespace MohawkGame2D
         // Place your variables here:
         public Player player = new Player();
         public Water water = new Water();
+        public Obstacle obstacle = new Obstacle();
         // self note. for future zach dont put a new game class here
 
         /// <summary>
