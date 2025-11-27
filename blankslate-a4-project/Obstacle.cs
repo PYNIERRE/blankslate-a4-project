@@ -19,37 +19,50 @@ namespace MohawkGame2D
         string[] images = []; // all images go here, file paths and what have you
         public void Setup()
         {
+            // define all your obstacles here, for example:
+            // Texture2D coralObstacle1;
 
+            for(int i = 0; i < images.Length; i++)
+            {
+                // and then define them again here, using this format:
+                // coralObstacle1 = Graphics.LoadTexture(images[i]);
+            }
         }
 
         public void Update()
         {
+            // how far the obstacles have travelled to the left from their initial position
+            float globalOffset = Time.DeltaTime * 100.0f;
+
             // cycles through each defined obstacle
-            for(int i = 0; i < (colliderX1Positions.Length); i++)
+            for (int i = 0; i < (colliderX1Positions.Length); i++)
             {
                 // if the obstacle is undefined, don't try to render it
-                if(images[i] != null)
+                if (images[i] != null)
                 {
-                    CollideObstacle(colliderX1Positions[i], colliderY1Positions[i], colliderX2Positions[i], colliderY2Positions[i], offsets[i]);
-                    DrawObstacle(imageYValues[i], images[i], offsets[i], i); // this needs the index because it has dependencies for CullObstacle
+                    CollideObstacle(colliderX1Positions[i], colliderY1Positions[i], colliderX2Positions[i], colliderY2Positions[i], offsets[i], globalOffset);
+                    DrawObstacle(imageYValues[i], images[i], offsets[i], i, globalOffset); // this needs the index because it has dependencies for CullObstacle
                 }
             }
         }
 
         // detects obstacles colliding with things
-        void CollideObstacle(float colliderAreaX1, float colliderAreaY1, float colliderAreaX2, float colliderAreaY2, float obstacleOffset)
+        void CollideObstacle(float colliderAreaX1, float colliderAreaY1, float colliderAreaX2, float colliderAreaY2, float obstacleOffset, float globalOffset)
         {
-            
+            Draw.FillColor = new Color(255, 0, 0, 50);
+            // un-comment this line if you want to debug hitbox sizes
+            // Draw.Rectangle((colliderAreaX1 + obstacleOffset) - globalOffset, colliderAreaY1, colliderAreaX2 - colliderAreaX1, colliderAreaY2 - colliderAreaY1);
         }
 
         // draws obstacles
-        void DrawObstacle(float obstacleImageY, string obstacleImage, float obstacleOffset, int index)
+        void DrawObstacle(float obstacleImageY, string obstacleImage, float obstacleOffset, int index, float globalOffset)
         {
+            // actually draws the obstacle, relative to the offset.
 
 
-            // detects if an obstacle is past the player
+            // detects if an obstacle is past the player by one game window size, as insurance to make sure it being removed isn't a visible action
 
-            if (obstacleOffset < 0)
+            if ((obstacleOffset - globalOffset) < (Window.Width * -1))
             {
                 CullObstacle(index);
             }
@@ -57,7 +70,8 @@ namespace MohawkGame2D
         // if an obstacle is past the player, delete it
         void CullObstacle(int obstacleNumber)
         {
-
+            // deletes by undefining, as that's what the "if" statement in the update() funciton is detecting
+            images[obstacleNumber] = null;
         }
     }
 }
