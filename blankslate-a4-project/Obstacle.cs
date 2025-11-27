@@ -24,9 +24,11 @@ namespace MohawkGame2D
 
         public void Update()
         {
-            for(i < 0)
-            CollideObstacle();
-            DrawObstacle();
+            for(int i = 0; i < (obstacleColliderX1Positions.Length); i++)
+            {
+                CollideObstacle();
+                DrawObstacle();
+            }
         }
 
         // detects obstacles colliding with things
