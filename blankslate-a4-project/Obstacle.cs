@@ -8,6 +8,15 @@ namespace MohawkGame2D
 {
     public class Obstacle
     {
+        // all of the arrays the functions will access
+
+        float[] obstacleColliderX1Positions = [];
+        float[] obstacleColliderY1Positions = [];
+        float[] obstacleColliderX2Positions = [];
+        float[] obstacleColliderY2Positions = [];
+        float[] obstacleOffsets = [];
+        float[] obstacleImageYValues = [];
+        Texture2D[] obstacleImages = [];
         public void Setup()
         {
 
@@ -20,7 +29,7 @@ namespace MohawkGame2D
         }
 
         // detects obstacles colliding with things
-        void CollideObstacle(float colliderAreaX, float colliderAreaY, float obstacleOffset, int obstacleNumber)
+        void CollideObstacle(float colliderAreaX1, float colliderAreaY1, float colliderAreaX2, float colliderAreaY2, float obstacleOffset, int obstacleNumber)
         {
             
         }
