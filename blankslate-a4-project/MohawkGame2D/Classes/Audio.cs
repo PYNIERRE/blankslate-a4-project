@@ -19,73 +19,7 @@ namespace MohawkGame2D
     public static class Audio
     {
 
-        #region Fields and Properties
-
-        /// <summary>
-        ///     Keep list of music to auto-update in background, and also
-        ///     speed up duplicate load, and properly unload on quit.
-        /// </summary>
-        private static readonly Dictionary<string, Music> loadedMusic = [];
-
-        /// <summary>
-        ///     Keep list of sounds to auto-update in background, and also
-        ///     speed up duplicate load, and properly unload on quit.
-        /// </summary>
-        private static readonly Dictionary<string, Sound> loadedSounds = [];
-
-        /// <summary>
-        ///     Get an array of all loaded music.
-        /// </summary>
-        public static Music[] LoadedMusic => [.. loadedMusic.Values];
-
-        /// <summary>
-        ///     Get an array of all loaded sounds.
-        /// </summary>
-        public static Sound[] LoadedSounds => [.. loadedSounds.Values];
-
-        #endregion
-
-        #region Methods
-
-        /// <summary>
-        ///     Get the length of <paramref name="music"/> in seconds.
-        /// </summary>
-        /// <param name="music">The music data to check.</param>
-        /// <returns>
-        ///     Returns the length of audio file <paramref name="music"/> in seconds.
-        /// </returns>
-        public static float GetMusicLength(Music music) => Raylib.GetMusicTimeLength(music);
-
-        /// <summary>
-        ///     Checks if <paramref name="music"/> is playing.
-        /// </summary>
-        /// <param name="music">The music to check.</param>
-        /// <returns>
-        ///     Returns true if playing, false otherwise.
-        /// </returns>
-        public static bool IsPlaying(Music music) => Raylib.IsMusicStreamPlaying(music);
-
-        /// <summary>
-        ///     Checks if <paramref name="sound"/> is playing.
-        /// </summary>
-        /// <param name="sound">The sound to check.</param>
-        /// <returns>
-        ///     Returns true if playing, false otherwise.
-        /// </returns>
-        public static bool IsPlaying(Sound sound) => Raylib.IsSoundPlaying(sound);
-
-        /// <summary>
-        ///     Loads a music file at <paramref name="filePath"/>.
-        /// </summary>
-        /// <remarks>
-        ///     Music should be more than 10s long, otherwise use <see cref="Sound"/>.
-        ///     Supported file types: FLAC, MOD, MP3, OGG, QOA, WAV, XM.
-        /// </remarks>
-        /// <param name="filePath">The file path to the audio file.</param>
-        /// <returns>
-        ///     Returns the loaded music data.
-        /// </returns>
-        public static Music LoadMusic(string filePath)
+        public static void InitBgAudio()
         {
             // Return existing instance if reloading same asset.
             if (loadedMusic.TryGetValue(filePath, out Music value))
