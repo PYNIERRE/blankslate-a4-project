@@ -26,7 +26,7 @@ public static class Program
         Raylib.InitWindow(Window.Width, Window.Height, Window.Title);
         Raylib.SetTargetFPS(Window.TargetFPS);
         Raylib.InitAudioDevice();
-        Audio.InitBgAudio();
+        BGSound.InitBgAudio();
 
         // Wrapper setup
         Text.Initialize();
@@ -53,10 +53,10 @@ public static class Program
         while (!Raylib.WindowShouldClose())
         {
             // Update music buffers every frame
-            Raylib.UpdateMusicStream(Audio.bgSound);
-            if (!Raylib.IsMusicStreamPlaying(Audio.bgSound))
+            Raylib.UpdateMusicStream(BGSound.bgSound);
+            if (!Raylib.IsMusicStreamPlaying(BGSound.bgSound))
             {
-                Raylib.PlayMusicStream(Audio.bgSound);
+                Raylib.PlayMusicStream(BGSound.bgSound);
             }
 
             // Choose current buffer
@@ -89,6 +89,6 @@ public static class Program
         // Other shutdown operations
         Raylib.CloseAudioDevice();
         Raylib.CloseWindow();
-        Audio.StopBgAudio();
+        BGSound.StopBgAudio();
     }
 }

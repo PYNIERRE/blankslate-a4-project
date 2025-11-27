@@ -20,11 +20,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="MohawkGame2D\Assets\Cloud.png" />
     <None Remove="MohawkGame2D\Assets\pixel-party-218705.wav" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="MohawkGame2D\Assets\pixel-party-218705.wav">
+    <Content Include="MohawkGame2D\Assets\Cloud.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MohawkGame2D\Audio\pixel-party.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -34,6 +38,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="BGSound.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
     <Compile Update="MohawkGame2D\Classes\Audio.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>

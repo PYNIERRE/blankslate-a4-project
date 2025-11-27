@@ -12,19 +12,15 @@ namespace MohawkGame2D
     public class Game
     {
         // Place your variables here:
+        public Clouds clouds = new Clouds();
         /// <summary>
         ///     Setup runs once before the game loop begins.
         /// </summary>
         public void Setup()
         {
             Window.SetTitle("Dolphin Game");
-            Window.SetSize(800, 500);
-            // Text.Font = ("Arial");
-            Text.Size = 20;
-            int distancecounter = 0;
-            Text.Draw("Distance:" + distancecounter, new Vector2(1, 1));
-            if (distancecounter == 0)
-                distancecounter = 1;
+            Window.SetSize(1200, 700);
+            Window.TargetFPS = 120;
 
         }
         /// <summary>
@@ -33,6 +29,9 @@ namespace MohawkGame2D
         public void Update()
         {
             Window.ClearBackground(Color.White);
+            //Text.Font = ("Arial");
+            Text.Size = 20;
+
         }
     }
 
