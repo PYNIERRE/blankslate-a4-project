@@ -20,19 +20,19 @@ namespace MohawkGame2D
         }
 
         // detects obstacles colliding with things
-        void CollideObstacle()
+        void CollideObstacle(float colliderAreaX, float colliderAreaY)
         {
 
         }
 
         // draws obstacles
-        void DrawObstacle()
+        void DrawObstacle(float obstacleImageY, Texture2D obstacleImage)
         {
 
         }
 
         // if an obstacle is past the player, delete it
-        void CullObstacle()
+        void CullObstacle(int obstacleNumber)
         {
 
         }
