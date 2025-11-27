@@ -20,12 +20,12 @@ namespace MohawkGame2D
         public void Setup()
         {
             // define all your obstacles here, for example:
-            Texture2D coralObstacle1;
+            //Texture2D coralObstacle1;
 
             for(int i = 0; i < images.Length; i++)
             {
                 // and then define them again here, using this format:
-                coralObstacle1 = Graphics.LoadTexture(images[i]);
+                //coralObstacle1 = Graphics.LoadTexture(images[i]);
             }
         }
 
@@ -60,7 +60,9 @@ namespace MohawkGame2D
             // actually draws the obstacle, relative to the offset.
             Graphics.Scale = 1.0f;
             Graphics.Rotation = 0.0f;
-            Graphics.Draw(coral)
+
+            // define your obstacle's image, then replace "OBSTACLE" with the one you defined, you'll need to do this for each obstacle:
+            // Graphics.Draw(OBSTACLE, obstacleOffset + globalOffset, obstacleImageY);
 
             // detects if an obstacle is past the player by one game window size, as insurance to make sure it being removed isn't a visible action
 
