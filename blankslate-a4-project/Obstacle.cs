@@ -10,13 +10,13 @@ namespace MohawkGame2D
     {
         // all of the arrays the functions will access
 
-        float[] obstacleColliderX1Positions = [];
-        float[] obstacleColliderY1Positions = [];
-        float[] obstacleColliderX2Positions = [];
-        float[] obstacleColliderY2Positions = [];
-        float[] obstacleOffsets = [];
-        float[] obstacleImageYValues = [];
-        Texture2D[] obstacleImages = [];
+        float[] obstacleColliderX1Positions = []; // always set this value to 0, unless the image doesn't line up perfectly with the hitbox
+        float[] obstacleColliderY1Positions = []; // set this value to 0 if the obstacle starts at the ceiling
+        float[] obstacleColliderX2Positions = []; // never set this value to 0, as the collider would simply be a line
+        float[] obstacleColliderY2Positions = []; // same goes for this one
+        float[] obstacleOffsets = []; // set this value to 0 if you want it to start all the way on the left of the screen
+        float[] obstacleImageYValues = []; // only needs a y value, as it's position is tied to the obstacle offset
+        Texture2D[] obstacleImages = []; // all images go here
         public void Setup()
         {
 
@@ -24,6 +24,7 @@ namespace MohawkGame2D
 
         public void Update()
         {
+            for(i < 0)
             CollideObstacle();
             DrawObstacle();
         }
@@ -38,8 +39,14 @@ namespace MohawkGame2D
         void DrawObstacle(float obstacleImageY, Texture2D obstacleImage, float obstacleOffset, int obstacleNumber)
         {
 
-        }
 
+            // detects if an obstacle is past the player
+
+            if (obstacleOffset < 0)
+            {
+                CullObstacle();
+            }
+        }
         // if an obstacle is past the player, delete it
         void CullObstacle(int obstacleNumber)
         {
