@@ -26,6 +26,7 @@ public static class Program
         Raylib.InitWindow(Window.Width, Window.Height, Window.Title);
         Raylib.SetTargetFPS(Window.TargetFPS);
         Raylib.InitAudioDevice();
+        Audio.InitBgAudio();
 
         // Wrapper setup
         Text.Initialize();
@@ -52,8 +53,11 @@ public static class Program
         while (!Raylib.WindowShouldClose())
         {
             // Update music buffers every frame
-            foreach (var music in Audio.LoadedMusic)
-                Raylib.UpdateMusicStream(music);
+            Raylib.UpdateMusicStream(Audio.bgSound);
+            if (!Raylib.IsMusicStreamPlaying(Audio.bgSound))
+            {
+                Raylib.PlayMusicStream(Audio.bgSound);
+            }
 
             // Choose current buffer
             RenderTexture2D thisFrame = drawBuffer0 ? buffers[0] : buffers[1];
@@ -76,10 +80,8 @@ public static class Program
         }
 
         // Unload assets
-        foreach (var music in Audio.LoadedMusic)
-            Audio.UnloadMusic(music);
-        foreach (var sound in Audio.LoadedSounds)
-            Audio.UnloadSound(sound);
+        //foreach (var music in Audio.LoadedMusic)
+            //Audio.UnloadMusic(music);
         foreach (var font in Text.LoadedFonts)
             Text.UnloadFont(font);
         foreach (var texture in Graphics.LoadedTextures)
@@ -87,5 +89,6 @@ public static class Program
         // Other shutdown operations
         Raylib.CloseAudioDevice();
         Raylib.CloseWindow();
+        Audio.StopBgAudio();
     }
 }
