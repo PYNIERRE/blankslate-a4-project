@@ -13,10 +13,11 @@ namespace MohawkGame2D
 
         public void Setup() 
         {
-
+            
         }
         public void DrawClouds() 
         { 
+            
         
         }
         public void Update()

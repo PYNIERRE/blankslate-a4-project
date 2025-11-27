@@ -12,6 +12,9 @@ namespace MohawkGame2D
     public class Game
     {
         // Place your variables here:
+        float distance = 0;
+        float distancePerSecond = 10;
+
         public Clouds clouds = new Clouds();
         /// <summary>
         ///     Setup runs once before the game loop begins.
@@ -29,8 +32,10 @@ namespace MohawkGame2D
         public void Update()
         {
             Window.ClearBackground(Color.White);
-            //Text.Font = ("Arial");
+            distance += 1;
+
             Text.Size = 20;
+            Text.Draw($"{distance}", 0, 0);
 
         }
     }
