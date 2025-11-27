@@ -8,7 +8,7 @@ namespace MohawkGame2D
 {
     public class Obstacle
     {
-        // all of the arrays the functions will access, would use vector2, but that'd take up way more lines than just four separate arrays
+        // all of the arrays the functions will access, would use vector2, but that'd take up way more lines than just separate arrays
 
         float[] colliderX1Positions = []; // always set this value to 0, unless the image doesn't line up perfectly with the hitbox
         float[] colliderY1Positions = []; // set this value to 0 if the obstacle starts at the ceiling
@@ -16,7 +16,7 @@ namespace MohawkGame2D
         float[] colliderY2Positions = []; // same goes for this one
         float[] offsets = []; // set this value to 0 if you want it to start all the way on the left of the screen
         float[] imageYValues = []; // only needs a y value, as it's position is tied to the obstacle offset
-        Texture2D[] images = []; // all images go here
+        string[] images = []; // all images go here, file paths and what have you
         public void Setup()
         {
 
@@ -31,7 +31,7 @@ namespace MohawkGame2D
                 if(images[i] != null)
                 {
                     CollideObstacle(colliderX1Positions[i], colliderY1Positions[i], colliderX2Positions[i], colliderY2Positions[i], offsets[i]);
-                    DrawObstacle(imageYValues[i], images[i], offsets[i], i);
+                    DrawObstacle(imageYValues[i], images[i], offsets[i], i); // this needs the index because it has dependencies for CullObstacle
                 }
             }
         }
@@ -43,7 +43,7 @@ namespace MohawkGame2D
         }
 
         // draws obstacles
-        void DrawObstacle(float obstacleImageY, Texture2D obstacleImage, float obstacleOffset, int index)
+        void DrawObstacle(float obstacleImageY, string obstacleImage, float obstacleOffset, int index)
         {
 
 
