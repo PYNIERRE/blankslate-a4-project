@@ -11,10 +11,11 @@ namespace MohawkGame2D
 
     public class Clouds
     {
+        Texture2D cloudTexture = Raylib.LoadTexture("MohawkGame2D/Assets/clouddd.png");
 
         public void Setup() 
         {
-            
+         
         }
 
         public void Update()
@@ -23,8 +24,6 @@ namespace MohawkGame2D
         }
         public void DrawClouds()
         {
-
-           Texture2D cloudTexture = Raylib.LoadTexture("MohawkGame2D/Assets/clouddd.png");
             Raylib.DrawTexture(cloudTexture, 3, 3, Color.White);
 
         }
