@@ -21,6 +21,7 @@ namespace MohawkGame2D
 
         // define all your obstacles here, for example:
         private Texture2D coralObstacle1;
+
         public void Setup()
         {
             // and then define them again here, using this format:
@@ -39,7 +40,7 @@ namespace MohawkGame2D
                 if (images[i] != null)
                 {
                     CollideObstacle(colliderX1Positions[i], colliderY1Positions[i], colliderX2Positions[i], colliderY2Positions[i], offsets[i], globalOffset);
-                    DrawObstacle(imageYValues[i], images[i], offsets[i], i, globalOffset); // this needs the index because it has dependencies for CullObstacle
+                    DrawObstacle(imageYValues[i], offsets[i], i, globalOffset); // this needs the index because it has dependencies for CullObstacle
                 }
             }
         }
@@ -50,17 +51,19 @@ namespace MohawkGame2D
             Draw.FillColor = new Color(255, 0, 0, 50);
             // un-comment this line if you want to debug hitbox sizes
             // Draw.Rectangle((colliderAreaX1 + obstacleOffset) - globalOffset, colliderAreaY1, colliderAreaX2 - colliderAreaX1, colliderAreaY2 - colliderAreaY1);
+
+            // currently nothing here for collision, the player's collision is set up in a weird way, so it'll take a while to figure out.
         }
 
         // draws obstacles
-        void DrawObstacle(float obstacleImageY, string obstacleImage, float obstacleOffset, int index, float globalOffset)
+        void DrawObstacle(float obstacleImageY, float obstacleOffset, int index, float globalOffset)
         {
             // actually draws the obstacle, relative to the offset.
             Graphics.Scale = 1.0f;
             Graphics.Rotation = 0.0f;
 
             // define your obstacle's image, then replace "OBSTACLE" with the one you defined, you'll need to do this for each obstacle:
-            Graphics.Draw(coralObstacle1, obstacleOffset + globalOffset, obstacleImageY);
+            Graphics.Draw(coralObstacle1, obstacleOffset - globalOffset, obstacleImageY);
 
             // detects if an obstacle is past the player by one game window size, as insurance to make sure it being removed isn't a visible action
 
