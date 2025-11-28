@@ -25,6 +25,7 @@ namespace MohawkGame2D
             Window.SetSize(1200, 700);
             Window.TargetFPS = 120;
 
+
         }
         /// <summary>
         ///     Update runs every frame.
@@ -36,6 +37,8 @@ namespace MohawkGame2D
 
             Text.Size = 20;
             Text.Draw($"{distance}", 0, 0);
+
+            clouds.DrawClouds();
 
         }
     }

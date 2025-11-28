@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Raylib_cs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -15,13 +16,16 @@ namespace MohawkGame2D
         {
             
         }
-        public void DrawClouds() 
-        { 
-            
-        
-        }
+
         public void Update()
         {
+
+        }
+        public void DrawClouds()
+        {
+
+           Texture2D cloudTexture = Raylib.LoadTexture("MohawkGame2D/Assets/clouddd.png");
+            Raylib.DrawTexture(cloudTexture, 3, 3, Color.White);
 
         }
 

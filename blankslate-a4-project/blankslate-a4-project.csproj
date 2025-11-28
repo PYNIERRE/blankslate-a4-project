@@ -20,12 +20,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="MohawkGame2D\Assets\Cloud.png" />
+    <None Remove="MohawkGame2D\Assets\clouddd.png" />
     <None Remove="MohawkGame2D\Assets\pixel-party-218705.wav" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="MohawkGame2D\Assets\Cloud.png">
+    <Content Include="MohawkGame2D\Assets\clouddd.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="MohawkGame2D\Audio\pixel-party.wav">
