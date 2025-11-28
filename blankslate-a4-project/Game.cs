@@ -39,7 +39,7 @@ namespace MohawkGame2D
             Text.Draw($"{distance}", 0, 0);
 
             clouds.DrawClouds();
-            clouds.DrawClouds();
+
 
         }
     }

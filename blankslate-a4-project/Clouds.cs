@@ -24,7 +24,10 @@ namespace MohawkGame2D
         }
         public void DrawClouds()
         {
-            Raylib.DrawTexture(cloudTexture, 3, 3, Color.White);
+            Raylib.DrawTexture(cloudTexture, 1, 3, Color.White);
+            Raylib.DrawTexture(cloudTexture, 300, 50, Color.White);
+            Raylib.DrawTexture(cloudTexture, 600, 20, Color.White);
+            Raylib.DrawTexture(cloudTexture, 900, 50, Color.White);
 
         }
 
