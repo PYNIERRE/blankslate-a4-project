@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace MohawkGame2D
 {
@@ -10,23 +11,20 @@ namespace MohawkGame2D
     {
         // all of the arrays the functions will access, would use vector2, but that'd take up way more lines than just separate arrays
 
-        float[] colliderX1Positions = []; // always set this value to 0, unless the image doesn't line up perfectly with the hitbox
-        float[] colliderY1Positions = []; // set this value to 0 if the obstacle starts at the ceiling
-        float[] colliderX2Positions = []; // never set this value to 0, as the collider would simply be a line
-        float[] colliderY2Positions = []; // same goes for this one
-        float[] offsets = []; // set this value to 0 if you want it to start all the way on the left of the screen
-        float[] imageYValues = []; // only needs a y value, as it's position is tied to the obstacle offset
-        string[] images = []; // all images go here, file paths and what have you
+        float[] colliderX1Positions = [0]; // always set this value to 0, unless the image doesn't line up perfectly with the hitbox
+        float[] colliderY1Positions = [403]; // set this value to 0 if the obstacle starts at the ceiling
+        float[] colliderX2Positions = [197,]; // never set this value to 0, as the collider would simply be a line
+        float[] colliderY2Positions = [700,]; // same goes for this one
+        float[] offsets = [1000,]; // set this value to 0 if you want it to start all the way on the left of the screen
+        float[] imageYValues = [403,]; // only needs a y value, as it's position is tied to the obstacle offset
+        string[] images = ["Texures/obstacles/coralsprite.png",]; // all images go here, file paths and what have you
+
+        // define all your obstacles here, for example:
+        private Texture2D coralObstacle1;
         public void Setup()
         {
-            // define all your obstacles here, for example:
-            //Texture2D coralObstacle1;
-
-            for(int i = 0; i < images.Length; i++)
-            {
-                // and then define them again here, using this format:
-                //coralObstacle1 = Graphics.LoadTexture(images[i]);
-            }
+            // and then define them again here, using this format:
+            coralObstacle1 = Graphics.LoadTexture(images[0]);
         }
 
         public void Update()
@@ -62,7 +60,7 @@ namespace MohawkGame2D
             Graphics.Rotation = 0.0f;
 
             // define your obstacle's image, then replace "OBSTACLE" with the one you defined, you'll need to do this for each obstacle:
-            // Graphics.Draw(OBSTACLE, obstacleOffset + globalOffset, obstacleImageY);
+            Graphics.Draw(coralObstacle1, obstacleOffset + globalOffset, obstacleImageY);
 
             // detects if an obstacle is past the player by one game window size, as insurance to make sure it being removed isn't a visible action
 
